@@ -74,3 +74,22 @@ void L9110FanMotor::stop(){
   digitalWrite(_INAPin, 0);
   analogWrite(_INBPin, 0);
 }
+
+/**************************************************************************/
+/*!
+  @brief    Converts speed in percentage to needed value.
+  @param    speed           Speed of movement (0-100)
+  @returns  speed           Speed in value 0-255
+*/
+/**************************************************************************/
+uint8_t L9110FanMotor::_calculateSpeed(uint8_t speed) {
+  if (speed > 100)
+    speed = 100;
+  
+  speed = (speed * MAX_SPEED)/100;
+  Serial.println(speed);
+  if (speed > 0 && speed < MIN_TURN_SPEED)
+    speed = MIN_TURN_SPEED;
+
+  return speed;
+}

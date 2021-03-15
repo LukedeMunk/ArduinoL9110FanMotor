@@ -8,6 +8,8 @@
  */
 #ifndef L9110FanMotor_H
 #define L9110FanMotor_H
+#include <stdint.h>
+#include "Arduino.h"
 
 class L9110FanMotor
 {
