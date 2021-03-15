@@ -1,10 +1,10 @@
 /*
-   File:      ArduinoL9110FanMotor.ccp
-   Authors:   Luke de Munk
-   Class:     L9110FanMotor
-   Version:   1.0
-
-   Library for controlling fan with L9110 driver.
+ * File:      ArduinoL9110FanMotor.ccp
+ * Authors:   Luke de Munk
+ * Class:     L9110FanMotor
+ * Version:   1.0
+ *
+ * Library for controlling fan with L9110 driver.
 */
 #include "ArduinoL9110FanMotor.h"
 
