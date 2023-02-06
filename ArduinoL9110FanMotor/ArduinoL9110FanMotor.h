@@ -2,7 +2,6 @@
  * File:      ArduinoL9110FanMotor.h
  * Authors:   Luke de Munk
  * Class:     L9110FanMotor
- * Version:   1.0
  * 
  * Library for controlling fan with L9110 driver.
  */

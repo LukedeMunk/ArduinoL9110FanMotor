@@ -2,7 +2,6 @@
  * File:      ArduinoL9110FanMotor.ccp
  * Authors:   Luke de Munk
  * Class:     L9110FanMotor
- * Version:   1.0
  *
  * Library for controlling fan with L9110 driver.
 */
@@ -21,14 +20,14 @@
 */
 /**************************************************************************/
 L9110FanMotor::L9110FanMotor(uint8_t INAPin, uint8_t INBPin) {
-  _INAPin = INAPin;
-  _INBPin = INBPin;
+    _INAPin = INAPin;
+    _INBPin = INBPin;
 
-  pinMode(_INAPin, OUTPUT);
-  pinMode(_INBPin, OUTPUT);
+    pinMode(_INAPin, OUTPUT);
+    pinMode(_INBPin, OUTPUT);
 
-  digitalWrite(_INAPin, 0);
-  digitalWrite(_INBPin, 0);
+    digitalWrite(_INAPin, 0);
+    digitalWrite(_INBPin, 0);
 }
 
 /**************************************************************************/
@@ -38,18 +37,18 @@ L9110FanMotor::L9110FanMotor(uint8_t INAPin, uint8_t INBPin) {
 */
 /**************************************************************************/
 void L9110FanMotor::clockwise(uint8_t speed) {
-  uint8_t calcSpeed = _calculateSpeed(speed);                               //Convert percentage to actual speed
+    uint8_t calcSpeed = _calculateSpeed(speed);                             //Convert percentage to actual speed
 
-  /* If below start speed, start with higher speed to avoid getting stuck */
-  if (calcSpeed < MIN_START_SPEED) {
-    analogWrite(_INAPin, STARTUP_SPEED);
+    /* If below start speed, start with higher speed to avoid getting stuck */
+    if (calcSpeed < MIN_START_SPEED) {
+        analogWrite(_INAPin, STARTUP_SPEED);
+        digitalWrite(_INBPin, 0);
+        delay(20);
+    }
+
+    /* Output given speed */
+    analogWrite(_INAPin, calcSpeed);
     digitalWrite(_INBPin, 0);
-    delay(20);
-  }
-
-  /* Output given speed */
-  analogWrite(_INAPin, calcSpeed);
-  digitalWrite(_INBPin, 0);
 }
 
 /**************************************************************************/
@@ -59,18 +58,18 @@ void L9110FanMotor::clockwise(uint8_t speed) {
 */
 /**************************************************************************/
 void L9110FanMotor::counterClockwise(uint8_t speed) {
-  uint8_t calcSpeed = _calculateSpeed(speed);                               //Convert percentage to actual speed
+    uint8_t calcSpeed = _calculateSpeed(speed);                               //Convert percentage to actual speed
 
-  /* If below start speed, start with higher speed to avoid getting stuck */
-  if (calcSpeed < MIN_START_SPEED) {
+    /* If below start speed, start with higher speed to avoid getting stuck */
+    if (calcSpeed < MIN_START_SPEED) {
+        digitalWrite(_INAPin, 0);
+        analogWrite(_INBPin, STARTUP_SPEED);
+        delay(20);
+    }
+
+    /* Output given speed */
     digitalWrite(_INAPin, 0);
-    analogWrite(_INBPin, STARTUP_SPEED);
-    delay(20);
-  }
-
-  /* Output given speed */
-  digitalWrite(_INAPin, 0);
-  analogWrite(_INBPin, calcSpeed);
+    analogWrite(_INBPin, calcSpeed);
 }
 
 /**************************************************************************/
@@ -78,9 +77,9 @@ void L9110FanMotor::counterClockwise(uint8_t speed) {
   @brief    Stop fan.
 */
 /**************************************************************************/
-void L9110FanMotor::stop(){
-  digitalWrite(_INAPin, 0);
-  analogWrite(_INBPin, 0);
+void L9110FanMotor::stop() {
+    digitalWrite(_INAPin, 0);
+    digitalWrite(_INBPin, 0);
 }
 
 /**************************************************************************/
@@ -91,15 +90,17 @@ void L9110FanMotor::stop(){
 */
 /**************************************************************************/
 uint8_t L9110FanMotor::_calculateSpeed(uint8_t speed) {
-  /* Speed needs to be between 0 and 100 percent */
-  if (speed > 100)
-    speed = 100;
-  
-  speed = (speed * MAX_SPEED)/100;
-  
-  /* If speed is below minimum turn speed, return minimum output */
-  if (speed > 0 && speed < MIN_TURN_SPEED)
-    return MIN_TURN_SPEED;
+    /* Speed needs to be between 0 and 100 percent */
+    if (speed > 100) {
+        speed = 100;
+    }
+    
+    speed = (speed * MAX_SPEED)/100;
+    
+    /* If speed is below minimum turn speed, return minimum output */
+    if (speed > 0 && speed < MIN_TURN_SPEED) {
+        return MIN_TURN_SPEED;
+    }
 
-  return speed;
+    return speed;
 }
